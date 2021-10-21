@@ -2,6 +2,7 @@
 const { v4: uuid } = require('uuid')
 const multer = require('multer')
 
+
 const storage = require('../config/storage')
 
 const uploadAvatar = multer({ storage: storage }).single('avatar')
@@ -30,10 +31,11 @@ const servicosController = {
             const { name, valor } = req.body
 
             if (req.file != undefined) {
-                avatar + "/img/avatares/" + req.file.originalname
+                avatar = "/img/avatares/" + req.file.originalname;
             } else {
                 avatar = "/img/golfinho.jpg"
             }
+           
             servicos.push({ id: uuid(), name, valor: Number(valor), avatar })
             return res.redirect('/servicos')
         })
