@@ -17,7 +17,10 @@ router.get("/servicos",servicosController.index)
 router.get("/servicos/cadastro",servicosController.cadastro)
 router.get('/servicos/:id/edit',servicosController.edit)
 router.post("/servicos",servicosController.save)
+
 router.post("/cadastro",servicosController.cadastroSave)
+router.get("/cadastro",servicosController.cadastroSave)
+
 router.put('/servicos/:id',servicosController.update)
 router.delete('/servicos/:id',servicosController.delete)
 

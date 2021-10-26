@@ -5,6 +5,11 @@ const petRouter = require('./routes/rotasPet')
 const servicosRouter = require("./routes/servicos")
 const { check,body, validationResult } = require('express-validator');
 
+const bcrypt = require('bcrypt')
+
+let hash = bcrypt.hashSync('mickss321',10);
+
+console.log(hash)
 
 
 app.use(express.urlencoded({extended: false}))

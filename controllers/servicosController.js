@@ -19,6 +19,7 @@ const cadastro = [
     { id: uuid(), nome: "Micael", idade: 17, email: "1234@gmail.com", senha: 12, sexo: "Masculino" }
 ]
 
+
 console.log(uuid())
 
 const servicosController = {
@@ -49,6 +50,7 @@ const servicosController = {
     cadastroSave: (req, res) => {
         const { nome, idade, email, senha } = req.body
         cadastro.push({ id: uuid(), nome, idade, email, senha })
+
         return res.redirect(cadastro)
     },
     update: (req, res) => {
@@ -87,8 +89,10 @@ const servicosController = {
         servicos.splice(servicoIndex, 1)
 
         return res.redirect('/servicos')
-    }
+    },
 }
+
+
 
 
 module.exports = servicosController
