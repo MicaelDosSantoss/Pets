@@ -7,7 +7,7 @@ const { check,body, validationResult } = require('express-validator');
 
 const bcrypt = require('bcrypt')
 
-let hash = bcrypt.hashSync('mickss321',10);
+let hash = bcrypt.hashSync('21736',10);
 
 console.log(hash)
 
