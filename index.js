@@ -28,7 +28,7 @@ app.get("/contato", (req,res) => {
     res.render("contato")
 })
 
-app.post('/contato', [check('nomeContato').isLength( {min:3}  ),check('mensagem').isLength({min:10}) ] , (req,res) => { 
+app.post('/contato', [body('nomeContato').isLength( {min:3}  ),check('mensagem').isLength({min:10}) ] , (req,res) => { 
     return res.json(req.body)
  })
 

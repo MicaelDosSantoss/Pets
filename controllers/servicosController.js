@@ -1,9 +1,13 @@
 
 const { v4: uuid } = require('uuid')
 const multer = require('multer')
-
-
 const storage = require('../config/storage')
+const { check,body, validationResult } = require('express-validator')
+const bcrypt = require('bcrypt')
+const fs = require('fs')
+
+
+
 
 const uploadAvatar = multer({ storage: storage }).single('avatar')
 
@@ -15,9 +19,9 @@ const servicos = [
     { id: uuid(), name: "Clínica", valor: 150, avatar: "/img/golfinho.jpg" }
 ]
 
-const cadastro = [
-    { id: uuid(), nome: "Micael", idade: 17, email: "1234@gmail.com", senha: 12, sexo: "Masculino" }
-]
+// const cadastro = [
+//     nome: "Micael", idade: 17, email: "1234@gmail.com", senha: 12,}
+// ]
 
 
 console.log(uuid())
@@ -25,6 +29,21 @@ console.log(uuid())
 const servicosController = {
     index: (req, res) => {
         return res.render("servicos/lista", { servicos })
+    },
+    users:(req,res) => {
+        
+const content = fs.readFileSync('usuarios.json',"utf-8")
+const usuarios = JSON.parse(content)
+
+const body = req.body
+
+     const hash = bcrypt.hashSync(body.senha,10)
+
+const { nome, idade, email, senha } = req.body
+usuarios.push({ nome, idade, email, senha: hash })
+
+
+return res.json(usuarios)
     },
     save: (req, res) => {
 
@@ -47,12 +66,27 @@ const servicosController = {
     cadastro: (req, res) => {
         return res.render("servicos/cadastro")
     },
-    cadastroSave: (req, res) => {
-        const { nome, idade, email, senha } = req.body
-        cadastro.push({ id: uuid(), nome, idade, email, senha })
 
-        return res.redirect(cadastro)
+    telaCadastro: (req,res) => {
+        res.render('cadastro')
     },
+
+    cadastroSave: (req, res) => {
+        const content = fs.readFileSync('usuarios.json',"utf-8")
+const usuarios = JSON.parse(content)
+
+        const { nome, idade, email, senha } = req.body
+        usuarios.push({ id: uuid(), nome, idade, email, senha })
+
+       
+        const body = req.body
+
+        const hash = bcrypt.hashSync(body.senha,10)
+        
+        return res.json(hash)
+        
+    },
+
     update: (req, res) => {
         uploadAvatar(req, res, () => {
             const { name, valor } = req.body
@@ -90,6 +124,11 @@ const servicosController = {
 
         return res.redirect('/servicos')
     },
+    loginSave: (req,res) => {
+        
+    }, loginMostrar: (req,res) => {
+        res.render('login')
+    }
 }
 
 
